@@ -1,6 +1,8 @@
 
 import React, { Component } from 'react';
 
+import 'normalize.css';
+
 import CategorySelect from './CategorySelect';
 import SearchResultList from './SearchResultList';
 import SavedResultList from './SavedResultList';
@@ -77,6 +79,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
+				<h1>Search Pixabay images</h1>
 				<SearchInput
 					onUpdate={this.handleSearchInputUpdate}
 					searchQuery={this.state.searchQuery}
@@ -87,6 +90,7 @@ class App extends Component {
 				/>
 				<SearchButton
 					loading={this.state.loading}
+					searchQuery={this.state.searchQuery}
 					onClick={this.handleSearchButtonClick}
 				/>
 				<SearchResultList

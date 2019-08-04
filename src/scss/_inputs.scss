@@ -1,0 +1,53 @@
+
+// generic input, select, textarea, button, etc styles
+
+input[type="text"], select, button {
+	transition: all 100ms ease-out;
+
+	min-width: 240px;
+	margin: 0;
+
+	border-width: 0px;
+	border-color: none;
+	border-style: solid;
+
+	border-radius: 4px;
+
+	padding: 0.4em 1em;
+}
+
+input[type="text"], select {
+	background-color: lighten($slate, 30);
+	color: white;
+	&:focus {
+		box-shadow: 0 0 3px rgba(lighten($amethyst, 10), 0.5);
+		// border-width: 1px;
+		// border-color: darken($slate, 20);
+	}
+}
+
+button {
+	background-color: $slate;
+	color: white;
+
+	&:focus {
+		box-shadow: 0 0 3px rgba(lighten($amethyst, 10), 0.5);
+		// border-width: 1px;
+		// border-color: darken($slate, 20);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+	}
+}
+
+select, button {
+	cursor: pointer;
+}
+
+label {
+	color: $slate;
+	display: block;
+	margin-bottom: 0.2em;
+}
+

@@ -20,11 +20,13 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				// js source files
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
 				use: ['babel-loader', 'eslint-loader'],
 			},
 			{
+				// test folder
 				test: /test\.js$/,
 				use: {
 					loader: 'mocha-loader',
@@ -32,6 +34,19 @@ module.exports = {
 				exclude: /node_modules/,
 			},
 			{
+				// normalize.css
+				test: /\.css$/,
+				use: [
+					{
+						loader: 'style-loader',
+					},
+					{
+						loader: 'css-loader',
+					},
+				],
+			},
+			{
+				// sass files
 				test: /\.(sass|scss)$/,
 				use: [
 					{

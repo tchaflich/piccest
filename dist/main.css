@@ -24,7 +24,60 @@ https://www.asciiart.eu/nature/beach
 This file is mostly imports, so have some soothing ASCII art!
 
 */
-html {
+input[type="text"], select, button {
+  transition: all 100ms ease-out;
+  min-width: 240px;
+  margin: 0;
+  border-width: 0px;
+  border-color: none;
+  border-style: solid;
+  border-radius: 4px;
+  padding: 0.4em 1em; }
+
+input[type="text"], select {
+  background-color: #5f95cd;
+  color: white; }
+  input[type="text"]:focus, select:focus {
+    box-shadow: 0 0 3px rgba(131, 90, 174, 0.5); }
+
+button {
+  background-color: #234970;
+  color: white; }
+  button:focus {
+    box-shadow: 0 0 3px rgba(131, 90, 174, 0.5); }
+  button:disabled {
+    opacity: 0.5; }
+
+select, button {
+  cursor: pointer; }
+
+label {
+  color: #234970;
+  display: block;
+  margin-bottom: 0.2em; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lora", serif; }
+
+.App {
+  margin: 1em; }
+
+.SearchInput {
+  margin: 1em auto; }
+  .SearchInput input {
+    width: 100%; }
+
+.SearchButton {
+  margin: 1em auto; }
+  .SearchButton button {
+    width: 100%; }
+
+.CategorySelect {
+  margin: 1em auto; }
+  .CategorySelect select {
+    width: 100%; }
+
+#root {
   box-sizing: border-box;
   font-size: 16px; }
 
@@ -43,5 +96,7 @@ html, body {
   html body > *, body body > * {
     flex-shrink: 0; }
   html #root, body #root {
-    flex: 1; }
+    flex: 1;
+    background-color: #e1e2e3;
+    color: #0a0a46; }
 

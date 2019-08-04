@@ -14,7 +14,9 @@ class SearchInput extends Component {
 	render() {
 		return (
 			<div className="SearchInput">
+				<label>What are you looking for?</label>
 				<input
+					type="text"
 					placeholder={this.getPlaceholder()}
 					onChange={this.props.onUpdate}
 					value={this.props.searchQuery}

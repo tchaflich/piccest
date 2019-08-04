@@ -9,9 +9,9 @@ class SearchButton extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="SearchButton">
 				<button
-					disabled={this.props.loading}
+					disabled={this.props.loading || !this.props.searchQuery}
 					onClick={this.props.onClick}
 				>Search!</button>
 			</div>

@@ -49,7 +49,7 @@ class CategorySelect extends Component {
 	render() {
 		let optionElements = [];
 		optionElements.push(
-			<option key={null} value="">All</option>
+			<option key={null} value="">All categories</option>
 		);
 		optionElements = optionElements.concat(
 			CategorySelect.getCategoryOptions().map(this.renderOption)
@@ -57,6 +57,7 @@ class CategorySelect extends Component {
 
 		return (
 			<div className="CategorySelect">
+				<label>Which category would you like to look in?</label>
 				<select
 					value={this.props.searchCategory}
 					onChange={this.props.onUpdate}
