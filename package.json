@@ -1,0 +1,45 @@
+{
+  "name": "piccest",
+  "version": "1.0.0",
+  "description": "Retrieves and displays images from Pixabay API",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha --require @babel/register test/",
+    "lint": "npx eslint src/js/",
+    "build": "npm run test && npm run lint && npx webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tchaflich/piccest.git"
+  },
+  "author": "Thomas Haflich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tchaflich/piccest/issues"
+  },
+  "homepage": "https://github.com/tchaflich/piccest#readme",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.5.5",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.1.0",
+    "eslint": "^6.1.0",
+    "eslint-loader": "^2.2.1",
+    "eslint-plugin-jsdoc": "^15.8.0",
+    "eslint-plugin-react": "^7.14.3",
+    "mini-css-extract-plugin": "^0.8.0",
+    "mocha": "^6.2.0",
+    "mocha-loader": "^2.0.1",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
+  }
+}
