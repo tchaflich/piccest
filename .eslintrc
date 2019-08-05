@@ -7,7 +7,7 @@
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly",
-        "Color": true,
+        "require": "readonly",
     },
     "parserOptions": {
         "ecmaFeatures": {

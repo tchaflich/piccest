@@ -1,13 +1,36 @@
 
-import fakeData from './../../yellow_flowers.json';
+import CategorySelect from './components/CategorySelect.js';
 
+let fakeData = require('./../../yellow_flowers.json');
+
+let configuration = null;
+try {
+	configuration = require('./../../configuration.json');
+} catch (e) {
+	// eslint-disable-next-line
+	console.error('Need a valid config file! Did you forget?');
+}
+
+
+/**
+ * Connector class - handles logic for Pixabay API
+ * URL construction, async functionality, etc
+ *
+ * @class
+ */
 class Pixabay {
 
 	// (∩ ❛ ہ ❛⋆)つ══ ☆ﾟ.*･｡ﾟ✫*ﾟ･ﾟ｡.★.*｡･ﾟ✫*.
-	// todo - actually hook up to the API
-	// currently the promise returned is a setTimeout,
-	// to emulate an asynchronous API functionality
 
+	/**
+	 * Do the given parameters match the last request sent?
+	 * Avoid returning old / outdated results
+	 *
+	 * @private
+	 *
+	 * @param {string} query
+	 * @param {string} category
+	 */
 	static isLastRequest(query, category) {
 		return (
 			Pixabay.lastRequest_ &&
@@ -16,6 +39,16 @@ class Pixabay {
 		);
 	}
 
+
+	/**
+	 * Keep the last request in mind
+	 * See "isLastRequest" for more details on why this is done
+	 *
+	 * @private
+	 *
+	 * @param {string} query
+	 * @param {string} category
+	 */
 	static stashLastRequest(query, category) {
 		Pixabay.lastRequest_ = {
 			'query': query,
@@ -23,6 +56,19 @@ class Pixabay {
 		};
 	}
 
+
+	/**
+	 * Big main search function
+	 * Returns a Promise that ideally will resolve with the entire return data
+	 * If the request that's returning is not the last one
+	 * (for example, if there was a race condition),
+	 * The Promise will reject
+	 * DOES send empty strings as queries
+	 *
+	 * @param {string} query - The query string (raw)
+	 * @param {string} category - The category string (raw, enum)
+	 * @returns {Promise}
+	 */
 	static search(query, category) {
 		Pixabay.stashLastRequest(query, category);
 
@@ -37,6 +83,38 @@ class Pixabay {
 		});
 	}
 
+
+	/**
+	 * Retrieve the API key from configuration object
+	 * Should perform zero transformations on this
+	 *
+	 * Can return null in the event that the key is not set
+	 *
+	 * @returns {?string}
+	 */
+	static getAPIKey() {
+		if (!configuration) {
+			return null;
+		}
+		return configuration.PixabayAPIKey || null;
+	}
+
+	static encodeQuery(query) {
+		return encodeURIComponent(
+			query.replace(/(^\s*)|(\s*$)/g, '').toLowerCase()
+		);
+	}
+
+	static encodeCategory(category) {
+		let categoryEncoded = null;
+
+		if (category && (CategorySelect.getCategoryOptions()).indexOf(category) !== -1) {
+			categoryEncoded = encodeURIComponent(category); // can't be too careful!
+		}
+
+		return categoryEncoded;
+	}
+
 	/**
 	 * Create a full API query string (escaped)
 	 *
@@ -46,10 +124,22 @@ class Pixabay {
 	 * @param {string} query - The user's entered search query
 	 * @param {string} category - The selected search category
 	 */
-	static buildQueryString(query, category) { // eslint-disable-line
-		// let url = 'https://pixabay.com/api/';
+	static buildQueryString(query, category) {
+		let url = 'https://pixabay.com/api/';
 
-		// todo!
+		const key = Pixabay.getAPIKey();
+
+		const queryEncoded = Pixabay.encodeQuery(query);
+		const categoryEncoded = Pixabay.encodeCategory(category);
+
+		url += '?key=' + key;
+		url += '&q=' + queryEncoded;
+
+		if (categoryEncoded) {
+			url += '&category=' + category;
+		}
+
+		return url;
 	}
 
 

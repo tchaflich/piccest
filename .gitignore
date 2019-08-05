@@ -1,1 +1,8 @@
+# big, unnecessary
 node_modules
+
+# for protecting the API key
+# it is technically available on a public-facing site,
+# but at least this way it isn't in the public repository!
+configuration.json
+dist/
