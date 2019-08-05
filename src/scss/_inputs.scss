@@ -19,12 +19,17 @@ input[type="text"], select, button {
 input[type="text"], select {
 	background-color: lighten($slate, 30);
 	color: white;
+
+	height: 2.2rem;
+	line-height: 2.2rem - (0.4rem * 2);
+
 	&:focus {
 		box-shadow: 0 0 3px rgba(lighten($amethyst, 10), 0.5);
 		// border-width: 1px;
 		// border-color: darken($slate, 20);
 	}
 }
+
 
 button {
 	background-color: $slate;
@@ -49,5 +54,6 @@ label {
 	color: $slate;
 	display: block;
 	margin-bottom: 0.2em;
+	font-size: 0.9em;
 }
 

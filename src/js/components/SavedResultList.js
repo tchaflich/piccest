@@ -8,7 +8,7 @@ class SavedResultList extends Component {
 	}
 
 	render() {
-		return (<div>Saved results here!</div>);
+		return (<div className="blank">Saved results here!</div>);
 	}
 
 }

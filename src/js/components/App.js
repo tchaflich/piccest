@@ -104,6 +104,8 @@ class App extends Component {
 					searchCategory={this.state.searchCategory}
 				/>
 				<SearchResultList
+					query={this.state.searchQuery} // ui qol
+					loading={this.state.loading} // ui qol
 					results={this.state.searchResults}
 					onSave={this.handleResultSave}
 				/>

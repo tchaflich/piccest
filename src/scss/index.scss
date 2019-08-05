@@ -1,4 +1,6 @@
 
+// This is the big import file, so have some nice ASCII art
+
 /*
 
               ,.  _~-.,               .
@@ -22,10 +24,10 @@ _,.-=~'`^`'~=-.,__,.-=~'`^`'~=-.,__,.-=~'`^`'~=-.,.-=~'`^`'~=-.,__,.-=~'
 
 https://www.asciiart.eu/nature/beach
 
-This file is mostly imports, so have some soothing ASCII art!
-
 */
 
+// oh, to have an app with just one breakpoint again
+$breakpoint: 800px;
 
 // base styles, mixins, partials, etc
 @import "palette";
@@ -33,12 +35,15 @@ This file is mostly imports, so have some soothing ASCII art!
 
 @import "inputs";
 @import "headings";
+@import "blank";
 
 
 // components
 @import "components/App";
 @import "components/SearchInput";
 @import "components/CategorySelect";
+@import "components/SearchResultList";
+@import "components/Result";
 
 
 // resets, global styles, etc
@@ -58,23 +63,10 @@ body {
 	font-family: $font-stack-sans;
 }
 
-// to make the background color always be on screen,
-// and always stretch to the bottom of the screen
 html, body {
 	height: 100%;
-
-	display: flex;
-	flex-direction: column;
-
-	body > * {
-		flex-shrink: 0;
-	}
-
-	#root {
-		flex: 1;
-		background-color: lighten($gray, 40);
-		color: darken($midnight, 10);
-	}
+	background-color: lighten($gray, 40);
+	color: darken($midnight, 10);
 }
 
 
