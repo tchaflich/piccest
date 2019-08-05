@@ -6,7 +6,6 @@ import 'normalize.css';
 import CategorySelect from './CategorySelect';
 import SearchResultList from './SearchResultList';
 import SavedResultList from './SavedResultList';
-import SearchButton from './SearchButton';
 import SearchInput from './SearchInput';
 import Pixabay from '../Pixabay';
 
@@ -16,30 +15,42 @@ class App extends Component {
 		super(props);
 
 		this.state = {
+			// query string to send to Pixabay
 			'searchQuery': '',
+
+			// category string to send to Pixabay
 			'searchCategory': '',
+
+			// list of search results, null for haven't started yet
 			'searchResults': null,
+
+			// list of results user has saved
 			'savedResults': [],
+
+			// if we are currently sending a request
+			// used for UI QoL / "spinny" elements
 			'loading': false,
 		};
 
 		this.handleCategorySelectUpdate = this.handleCategorySelectUpdate.bind(this);
-		this.handleSearchButtonClick = this.handleSearchButtonClick.bind(this);
 		this.handleSearchInputUpdate = this.handleSearchInputUpdate.bind(this);
 		this.handleResultSave = this.handleResultSave.bind(this);
 		this.handleResultUnsave = this.handleResultUnsave.bind(this);
 	}
 
-	handleSearchButtonClick() {
-		this.setState({
-			'loading': true,
-		});
-
+	liveSearch(query, category) {
 		let randint = function(min, max) {
 			return Math.floor(Math.random() * (max - min + 1)) + min;
 		};
 
-		Pixabay.search().then((data) => {
+		this.setState({
+			'loading': true,
+		});
+
+		Pixabay.search(
+			query,
+			category
+		).then((data) => {
 			// todo: fix up when search works!
 			// this hits a random subsection of the fake results
 			const tmp1 = randint(0, data.hits.length - 1);
@@ -51,16 +62,20 @@ class App extends Component {
 				)),
 				'loading': false,
 			});
+		}).catch(() => {
+			// you just typed too fast, nbd
 		});
 	}
 
 	handleSearchInputUpdate(e) {
+		this.liveSearch(e.target.value, this.state.searchCategory);
 		this.setState({
 			'searchQuery': e.target.value,
 		});
 	}
 
 	handleCategorySelectUpdate(e) {
+		this.liveSearch(this.state.searchQuery, e.target.value);
 		this.setState({
 			'searchCategory': e.target.value,
 		});
@@ -87,11 +102,6 @@ class App extends Component {
 				<CategorySelect
 					onUpdate={this.handleCategorySelectUpdate}
 					searchCategory={this.state.searchCategory}
-				/>
-				<SearchButton
-					loading={this.state.loading}
-					searchQuery={this.state.searchQuery}
-					onClick={this.handleSearchButtonClick}
 				/>
 				<SearchResultList
 					results={this.state.searchResults}
