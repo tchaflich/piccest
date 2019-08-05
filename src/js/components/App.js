@@ -36,6 +36,13 @@ class App extends Component {
 		this.handleSearchInputUpdate = this.handleSearchInputUpdate.bind(this);
 		this.handleResultSave = this.handleResultSave.bind(this);
 		this.handleResultUnsave = this.handleResultUnsave.bind(this);
+
+		// reduces API hits for fast typers
+		// makes it appear slower the higher the timeout is set,
+		// but makes rendering lag less apparent
+		this.throttledLiveSearch = Pixabay.throttle((query, category) => {
+			this.liveSearch(query, category);
+		}, 200);
 	}
 
 	liveSearch(query, category) {
@@ -68,7 +75,7 @@ class App extends Component {
 	}
 
 	handleSearchInputUpdate(e) {
-		this.liveSearch(e.target.value, this.state.searchCategory);
+		this.throttledLiveSearch(e.target.value, this.state.searchCategory);
 		this.setState({
 			'searchQuery': e.target.value,
 		});

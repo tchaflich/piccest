@@ -24833,7 +24833,13 @@ function (_Component) {
     _this.handleCategorySelectUpdate = _this.handleCategorySelectUpdate.bind(_assertThisInitialized(_this));
     _this.handleSearchInputUpdate = _this.handleSearchInputUpdate.bind(_assertThisInitialized(_this));
     _this.handleResultSave = _this.handleResultSave.bind(_assertThisInitialized(_this));
-    _this.handleResultUnsave = _this.handleResultUnsave.bind(_assertThisInitialized(_this));
+    _this.handleResultUnsave = _this.handleResultUnsave.bind(_assertThisInitialized(_this)); // reduces API hits for fast typers
+    // makes it appear slower the higher the timeout is set,
+    // but makes rendering lag less apparent
+
+    _this.throttledLiveSearch = _Pixabay__WEBPACK_IMPORTED_MODULE_6__["default"].throttle(function (query, category) {
+      _this.liveSearch(query, category);
+    }, 200);
     return _this;
   }
 
@@ -24865,7 +24871,7 @@ function (_Component) {
   }, {
     key: "handleSearchInputUpdate",
     value: function handleSearchInputUpdate(e) {
-      this.liveSearch(e.target.value, this.state.searchCategory);
+      this.throttledLiveSearch(e.target.value, this.state.searchCategory);
       this.setState({
         'searchQuery': e.target.value
       });
@@ -25806,7 +25812,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-/* eslint-disable */
 
 
 var Pixabay =
@@ -25849,7 +25854,48 @@ function () {
     }
   }, {
     key: "buildQueryString",
-    value: function buildQueryString(query, category) {// todo
+    value: function buildQueryString(query, category) {} // todo
+
+    /**
+     * Returns a wrapper function that calls the sent callback once initially,
+     * then at most once every n milliseconds thereafter
+     *
+     * The callback does not preserve context; It does preserve arguments
+     *
+     * @param {Function} callback - The function to throttle
+     * @param {number} period - Timeout, in milliseconds
+     */
+
+  }, {
+    key: "throttle",
+    value: function throttle(callback, period) {
+      var last = null;
+      var timer = null;
+      return function () {
+        var _this = this,
+            _arguments = arguments;
+
+        var now = new Date(); // call immediately if:
+        // - this is the first time the function has ever been called,
+        // - we're past the window for another call to be applicable
+
+        if (!last || now > last + period) {
+          last = now;
+          callback.apply(this, arguments);
+          return;
+        } // set a timer if one is NOT already set
+        // this timer unsets its own variable for later
+
+
+        if (!timer) {
+          timer = setTimeout(function () {
+            last = new Date(); // the new now
+
+            callback.apply(_this, _arguments);
+            timer = null;
+          }, period - (now - last));
+        }
+      };
     }
   }]);
 
@@ -25858,7 +25904,6 @@ function () {
 
 Pixabay.lastRequest_ = null;
 /* harmony default export */ __webpack_exports__["default"] = (Pixabay);
-/* eslint-enable */
 
 /***/ }),
 /* 25 */
