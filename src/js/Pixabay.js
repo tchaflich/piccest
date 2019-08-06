@@ -1,8 +1,6 @@
 
 import CategorySelect from './components/CategorySelect.js';
 
-let fakeData = require('./../../yellow_flowers.json');
-
 let configuration = null;
 try {
 	configuration = require('./../../configuration.json');
@@ -73,14 +71,29 @@ class Pixabay {
 		Pixabay.stashLastRequest(query, category);
 
 		return new Promise((resolve, reject) => {
-			setTimeout(() => {
-				if (!Pixabay.isLastRequest(query, category)) {
-					reject();
+			let xhr = new XMLHttpRequest();
+			xhr.addEventListener('readystatechange', () => {
+				if (xhr.status === 200 && xhr.responseText) {
+					try {
+						resolve(JSON.parse(xhr.responseText));
+					} catch (e) {
+						reject();
+					}
 				}
-
-				resolve(fakeData);
-			}, 100 + Math.round(Math.random() * 500));
+			});
+			xhr.open('GET', Pixabay.buildQueryString(query, category));
+			xhr.send();
 		});
+
+		// return new Promise((resolve, reject) => {
+		// 	setTimeout(() => {
+		// 		if (!Pixabay.isLastRequest(query, category)) {
+		// 			reject();
+		// 		}
+
+		// 		resolve(fakeData);
+		// 	}, 100 + Math.round(Math.random() * 500));
+		// });
 	}
 
 
