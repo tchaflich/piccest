@@ -1,6 +1,4 @@
 
-import CategorySelect from './components/CategorySelect.js';
-
 let configuration = null;
 try {
 	configuration = require('./../../configuration.json');
@@ -19,6 +17,39 @@ try {
 class Pixabay {
 
 	// (∩ ❛ ہ ❛⋆)つ══ ☆ﾟ.*･｡ﾟ✫*ﾟ･ﾟ｡.★.*｡･ﾟ✫*.
+
+
+	/**
+	 * A list of the valid options from the Pixabay API
+	 * Does not include the blank "all" option
+	 *
+	 * @returns {Array.string}
+	 */
+	static getCategoryOptions() {
+		return [
+			'animals',
+			'backgrounds',
+			'buildings',
+			'business',
+			'computer',
+			'education',
+			'fashion',
+			'feelings',
+			'food',
+			'health',
+			'industry',
+			'music',
+			'nature',
+			'people',
+			'places',
+			'religion',
+			'science',
+			'sports',
+			'transportation',
+			'travel',
+		];
+	}
+
 
 	/**
 	 * Do the given parameters match the last request sent?
@@ -111,7 +142,7 @@ class Pixabay {
 	static encodeCategory(category) {
 		let categoryEncoded = null;
 
-		if (category && (CategorySelect.getCategoryOptions()).indexOf(category) !== -1) {
+		if (category && (Pixabay.getCategoryOptions()).indexOf(category) !== -1) {
 			categoryEncoded = encodeURIComponent(category); // can't be too careful!
 		}
 

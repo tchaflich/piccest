@@ -1,35 +1,12 @@
 
 import React, { Component } from 'react';
 
+import Pixabay from './../Pixabay.js';
+
 class CategorySelect extends Component {
 
 	constructor(props) {
 		super(props);
-	}
-
-	static getCategoryOptions() {
-		return [
-			'animals',
-			'backgrounds',
-			'buildings',
-			'business',
-			'computer',
-			'education',
-			'fashion',
-			'feelings',
-			'food',
-			'health',
-			'industry',
-			'music',
-			'nature',
-			'people',
-			'places',
-			'religion',
-			'science',
-			'sports',
-			'transportation',
-			'travel',
-		];
 	}
 
 	static capitalize(str) {
@@ -52,7 +29,7 @@ class CategorySelect extends Component {
 			<option key={null} value="">All categories</option>
 		);
 		optionElements = optionElements.concat(
-			CategorySelect.getCategoryOptions().map(this.renderOption)
+			Pixabay.getCategoryOptions().map(this.renderOption)
 		);
 
 		return (
