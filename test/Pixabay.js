@@ -19,6 +19,12 @@ describe('Pixabay connector', () => {
 			assert.equal(Pixabay.encodeQuery('teapot	'), 'teapot');
 		});
 
+		it('Trims all whitespace from a string containing only whitespace (\\s)', () => {
+			assert.equal(Pixabay.encodeQuery('    '), '');
+			assert.equal(Pixabay.encodeQuery('			'), '');
+			assert.equal(Pixabay.encodeQuery('  	    	'), '');
+		});
+
 		it('Simultaneously trims leading and trailing whitespace', () => {
 			assert.equal(Pixabay.encodeQuery('  teapot '), 'teapot');
 			assert.equal(Pixabay.encodeQuery('    teapot		'), 'teapot');

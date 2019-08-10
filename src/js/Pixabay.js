@@ -87,11 +87,15 @@ class Pixabay {
 
 	/**
 	 * Big main search function
+	 *
 	 * Returns a Promise that ideally will resolve with the entire return data
+	 *
 	 * If the request that's returning is not the last one
 	 * (for example, if there was a race condition),
 	 * The Promise will reject
-	 * DOES send empty strings as queries
+	 *
+	 * Does not send empty strings as queries;
+	 * instead, returns an auto-resolving promise with an empty formatted object
 	 *
 	 * @param {string} query - The query string (raw)
 	 * @param {string} category - The category string (raw, enum)
@@ -99,6 +103,14 @@ class Pixabay {
 	 */
 	static search(query, category) {
 		Pixabay.stashLastRequest(query, category);
+
+		if (!Pixabay.encodeQuery(query)) {
+			return new Promise((resolve) => {
+				resolve({
+					'hits': [],
+				});
+			});
+		}
 
 		return new Promise((resolve, reject) => {
 			let xhr = new XMLHttpRequest();
