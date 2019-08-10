@@ -4,7 +4,7 @@
   "description": "Retrieves and displays images from Pixabay API",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha --require @babel/register test/",
+    "test": "npx mocha --require @babel/register --require mock-local-storage test/",
     "lint": "npx eslint src/js/",
     "build": "npm run test && npm run lint && npx webpack"
   },
@@ -38,6 +38,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "mocha": "^6.2.0",
     "mocha-loader": "^2.0.1",
+    "mock-local-storage": "^1.1.8",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "webpack": "^4.39.1",

@@ -17,15 +17,15 @@ class Cache {
 	 * @returns {boolean}
 	 */
 	static canUseLocalStorage() {
-		if (!window.localStorage) {
+		if (typeof window.localStorage === 'undefined' || !window.localStorage) {
 			return false; // well, no, guess not
 		}
 
 		const testKey = 'piccest-test-key';
 
 		try {
-			localStorage.setItem(testKey, testKey);
-			localStorage.removeItem(testKey);
+			window.localStorage.setItem(testKey, testKey);
+			window.localStorage.removeItem(testKey);
 		} catch (e) {
 			return false;
 		}

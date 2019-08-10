@@ -3,8 +3,12 @@
 		"node": true,
 	},
 	"globals": {
+		"after": "readonly",
+		"afterEach": "readonly",
+		"before": "readonly",
+		"beforeEach": "readonly",
 		"describe": "readonly",
-		"it": "readonly"
+		"it": "readonly",
 	},
 	"rules": {
 		"max-lines": "off",
