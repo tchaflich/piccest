@@ -16,35 +16,29 @@ class SearchResult extends Result {
 		</div>)
 	}
 
+	isAlreadySaved() {
+		let i;
+		const ilen = this.props.saved.length;
 
-	renderTags() {
-		let tags = this.getTags().map((tag) => {
-			return <span key={tag}>{'#' + tag}</span>;
-		});
+		for (i = 0; i < ilen; i++) {
+			if (this.props.saved[i].id === this.props.data.id) {
+				return true;
+			}
+		}
 
-		return (<div className="tags">{tags}</div>);
-	}
-
-	renderCredits() {
-		return (
-			<div className="credits">{this.getType()} by {this.getAuthor()}</div>
-		);
-	}
-
-	renderEngagement() {
-		const engagement = this.getEngagement();
-
-		let text = engagement.map((each) => {
-			return each.count + ' ' + each.type;
-		}).join(', ');
-
-		return (<div className="engagement">{text}</div>)
+		return false;
 	}
 
 	getMasonryHeight() {
 		let h = (this.props.data.webformatHeight);
+		let w = (this.props.data.webformatWidth);
 
-		return Math.floor(h / 64) || 1;
+		// 1 x unit: 640px
+		// 1 y unit: 10px
+
+		return Math.max(Math.floor(
+			(h / 10) * (w / 640)
+		), 1);
 	}
 
 	renderImagePreview() {
@@ -64,8 +58,23 @@ class SearchResult extends Result {
 			'gridRow': 'span ' + this.getMasonryHeight(),
 		};
 
+		let classes = ['SearchResult'];
+		if (this.isAlreadySaved()) {
+			classes.push('saved');
+		} else {
+			classes.push('saveable');
+		}
+
 		return (
-			<div className="SearchResult" style={styles}>
+			<div
+				className={classes.join(' ')}
+				style={styles}
+				onClick={() => {
+					this.isAlreadySaved() ?
+						this.props.onUnsave(this.props.data) :
+						this.props.onSave(this.props.data);
+				}}
+			>
 				{this.renderImagePreview()}
 				{this.renderMeta()}
 			</div>

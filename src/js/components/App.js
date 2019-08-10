@@ -7,7 +7,9 @@ import CategorySelect from './CategorySelect';
 import SearchResultList from './SearchResultList';
 import SavedResultList from './SavedResultList';
 import SearchInput from './SearchInput';
+
 import Pixabay from '../Pixabay';
+import Cache from '../Cache';
 
 class App extends Component {
 
@@ -24,12 +26,12 @@ class App extends Component {
 			// list of search results, null for haven't started yet
 			'searchResults': null,
 
-			// list of results user has saved
-			'savedResults': [],
-
 			// if we are currently sending a request
 			// used for UI QoL / "spinny" elements
 			'loading': false,
+
+			// for react to keep track of if this has to rerender
+			'savedResultCount': App.getSavedResults().length,
 		};
 
 		this.handleCategorySelectUpdate = this.handleCategorySelectUpdate.bind(this);
@@ -77,14 +79,52 @@ class App extends Component {
 		});
 	}
 
-	handleResultSave() {
-		// todo
-		console.log('Result save called');
+	handleResultSave(whichResult) {
+		var alreadySaved = App.getSavedResults();
+		let i;
+		const ilen = alreadySaved.length;
+
+		for (i = 0; i < ilen; i++) {
+			if (alreadySaved[i].id === whichResult.id) {
+				return; // don't save again
+			}
+		}
+
+		alreadySaved.unshift(whichResult);
+		Cache.setItem('savedResults', alreadySaved);
+
+		this.setState({
+			'savedResultCount': alreadySaved.length,
+		});
 	}
 
-	handleResultUnsave() {
-		// todo
-		console.log('Result unsave called');
+	handleResultUnsave(whichResult) {
+		let savedResults = App.getSavedResults();
+
+		let i;
+		const ilen = savedResults.length;
+
+		for (i = ilen - 1; i >= 0; i--) {
+			if (savedResults[i].id === whichResult.id) {
+				savedResults.splice(i, 1);
+			}
+		}
+
+		Cache.setItem('savedResults', savedResults);
+
+		this.setState({
+			'savedResultCount': savedResults.length,
+		});
+	}
+
+	static getSavedResults() {
+		let savedResults = Cache.getItem('savedResults');
+
+		if (!savedResults) {
+			return [];
+		}
+
+		return savedResults.slice();
 	}
 
 	render() {
@@ -100,13 +140,16 @@ class App extends Component {
 					searchCategory={this.state.searchCategory}
 				/>
 				<SearchResultList
-					query={this.state.searchQuery} // ui qol
-					loading={this.state.loading} // ui qol
+					saved={App.getSavedResults()}
 					results={this.state.searchResults}
 					onSave={this.handleResultSave}
+					onUnsave={this.handleResultUnsave}
+					// ui qol - for blank
+					query={this.state.searchQuery}
+					loading={this.state.loading}
 				/>
 				<SavedResultList
-					results={this.state.savedResults}
+					results={App.getSavedResults()}
 					onUnsave={this.handleResultUnsave}
 				/>
 			</div>

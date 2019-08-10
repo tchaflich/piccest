@@ -11,13 +11,23 @@ class SearchResultList extends Component {
 
 	renderResult(result) {
 		return (
-			<SearchResult key={result.id} data={result} />
+			<SearchResult
+				key={result.id}
+				data={result}
+				saved={this.props.saved}
+				onSave={this.props.onSave}
+				onUnsave={this.props.onUnsave}
+			/>
 		)
+	}
+
+	shouldHaveResults() {
+		return this.props.query && !this.props.loading;
 	}
 
 	renderBlank() {
 		let contents;
-		if (this.props.query && !this.props.loading) {
+		if (this.shouldHaveResults()) {
 			contents = 'No results, sorry.';
 		} else {
 			contents = 'Use the search above to find pictures!'
@@ -36,7 +46,9 @@ class SearchResultList extends Component {
 		if (!this.props.results || !this.props.results.length) {
 			contents = this.renderBlank();
 		} else {
-			contents = this.props.results.slice(0, 20).map(this.renderResult);
+			contents = this.props.results.slice(0, 20).map((r) => {
+				return this.renderResult(r);
+			});
 			classes.push('grid');
 		}
 

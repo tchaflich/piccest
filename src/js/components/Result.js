@@ -12,6 +12,10 @@ class Result extends Component {
 		return this.props.data.webformatURL;
 	}
 
+	getLinkURL() {
+		return this.props.data.pageURL;
+	}
+
 	getTags() {
 		let tags;
 
@@ -56,6 +60,31 @@ class Result extends Component {
 				'count': this.props.data[key],
 			};
 		});
+	}
+
+	renderEngagement() {
+		const engagement = this.getEngagement();
+
+		let text = engagement.map((each) => {
+			return each.count + ' ' + each.type;
+		}).join(', ');
+
+		return (<div className="engagement">{text}</div>)
+	}
+
+
+	renderTags() {
+		let tags = this.getTags().map((tag) => {
+			return <span key={tag}>{'#' + tag}</span>;
+		});
+
+		return (<div className="tags">{tags}</div>);
+	}
+
+	renderCredits() {
+		return (
+			<div className="credits">{this.getType()} by {this.getAuthor()}</div>
+		);
 	}
 
 	render() {

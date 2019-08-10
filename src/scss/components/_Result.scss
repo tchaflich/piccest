@@ -1,53 +1,20 @@
 
-// .Result {
+@mixin after-banner {
+	transition: all 200ms ease-in-out;
 
-// 	text-align: center;
-// 	max-width: 400px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
 
-// 	.image-wrapper {
-// 		display: block;
-// 		float: left;
-// 		position: relative;
-// 		text-align: center;
-// 		// overflow: hidden;
+	line-height: 2em;
 
-// 		display: flex;
-// 		justify-content: space-around;
-// 		align-items: center;
+	color: white;
+	background-color: $amethyst;
+	text-align: center;
 
-// 		& > img {
-// 			overflow: hidden;
-
-// 			box-shadow:
-// 				0 0 2px rgba(darken($gray, 20), 0.5),
-// 				-1px 1px 2px rgba($midnight, 0.2);
-// 		}
-// 	}
-
-// 	.tag {
-// 		background-color: $amethyst;
-// 		color: white;
-// 		display: inline-block;
-// 		padding: 0.2em 0.5em;
-// 		border-radius: 4px;
-// 		margin: 0.2em;
-// 		font-size: 0.8em;
-// 	}
-
-// 	.engagements {
-// 		display: flex;
-// 		justify-content: space-around;
-// 	}
-
-// 	.engagement {
-// 		& > * {
-// 			display: inline-block;
-// 			vertical-align: middle;
-// 			font-size: 0.8rem;
-// 		}
-// 	}
-
-// }
+	overflow: hidden;
+}
 
 .SearchResult {
 
@@ -72,10 +39,6 @@
 		background-position: 50% 50%;
 
 		background-color: lighten($gray, 35);
-
-		&:hover {
-			// todo
-		}
 	}
 
 	& > .metadata {
@@ -116,6 +79,95 @@
 		}
 	}
 
+	&:after {
+		@include after-banner();
+		height: 0;
+	}
+	&:hover:after {
+		height: 2em;
+	}
+
+	&.saveable:after {
+		content: 'Save';
+		background-color: $slate;
+	}
+
+	&.saved:after {
+		background-color: darken($amethyst, 10);
+		height: 2em;
+		content: 'Saved';
+	}
+	&.saved:hover:after {
+		background-color: $midnight;
+		content: 'Unsave';
+	}
 }
 
 
+.SavedResult {
+
+	display: flex;
+	flex-direction: column;
+
+	margin-bottom: 1em;
+
+	& h3 {
+		margin: 0;
+		color: $amethyst;
+	}
+
+	& .tags {
+		font-size: 1em;
+		line-height: 1.2em;
+		margin-bottom: 0.1em;
+		& > span {
+			display: inline-block;
+			margin-right: 0.4em;
+		}
+	}
+
+	& .engagement {
+		font-size: 0.7em;
+		margin: 0.1em 0;
+	}
+
+	& > .image-wrapper {
+		max-width: 100%;
+	}
+
+	& img {
+		max-width: 100%;
+	}
+
+	& > .action-wrapper {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		display: flex;
+	}
+
+	& button {
+		min-width: 120px;
+	}
+
+	& a {
+		transition: color 200ms ease-in-out;
+		display: inline-block;
+		vertical-align: middle;
+		padding: 0.4em;
+
+		&:link {
+			color: $slate;
+		}
+		&:active {
+			color: $midnight;
+		}
+		&:visited {
+			color: $amethyst;
+		}
+		&:focus {
+			color: darken($amethyst, 20);
+		}
+	}
+
+}

@@ -7,12 +7,15 @@ class SavedResultList extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log(props);
 	}
 
 	renderResult(result) {
 		return (
-			<SavedResult key={result.id} data={result} />
+			<SavedResult
+				key={result.id}
+				data={result}
+				onUnsave={this.props.onUnsave}
+			/>
 		)
 	}
 
@@ -31,7 +34,9 @@ class SavedResultList extends Component {
 		if (!this.props.results || !this.props.results.length) {
 			contents = this.renderBlank();
 		} else {
-			contents = this.props.results.slice(0, 20).map(this.renderResult);
+			contents = this.props.results.map((r) => {
+				return this.renderResult(r);
+			});
 			classes.push('grid');
 		}
 
