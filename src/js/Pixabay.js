@@ -18,7 +18,6 @@ class Pixabay {
 
 	// (∩ ❛ ہ ❛⋆)つ══ ☆ﾟ.*･｡ﾟ✫*ﾟ･ﾟ｡.★.*｡･ﾟ✫*.
 
-
 	/**
 	 * A list of the valid options from the Pixabay API
 	 * Does not include the blank "all" option
@@ -133,21 +132,44 @@ class Pixabay {
 		return configuration.PixabayAPIKey || null;
 	}
 
+
+	/**
+	 * Transforms a query string
+	 * - Encodes as a URI component
+	 * - Trims leading and trailing whitespace
+	 * - Converts to lower case
+	 *
+	 * @param {string} query - The query string to encode
+	 */
 	static encodeQuery(query) {
 		return encodeURIComponent(
 			query.replace(/(^\s*)|(\s*$)/g, '').toLowerCase()
 		);
 	}
 
+
+	/**
+	 * Validates and possibly transforms a category string
+	 *
+	 * If the category sent is not in the list of valid categories,
+	 * will return empty string
+	 *
+	 * Otherwise will return the category string encoded as URI component,
+	 * transformed to lower case
+	 * (This *should* be the same as it was sent, but is future resistant)
+	 *
+	 * @param {string} category - The category string to encode
+	 */
 	static encodeCategory(category) {
 		let categoryEncoded = null;
 
 		if (category && (Pixabay.getCategoryOptions()).indexOf(category) !== -1) {
-			categoryEncoded = encodeURIComponent(category); // can't be too careful!
+			categoryEncoded = encodeURIComponent(category).toLowerCase(); // can't be too careful!
 		}
 
 		return categoryEncoded;
 	}
+
 
 	/**
 	 * Create a full API query string (escaped)
@@ -216,9 +238,15 @@ class Pixabay {
 	}
 
 
-
 }
 
+
+/**
+ * Cached last request sent
+ * Used to avoid returning outdated results via race conditions
+ *
+ * @type {object|null}
+ */
 Pixabay.lastRequest_ = null;
 
 
