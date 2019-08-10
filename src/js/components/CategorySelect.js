@@ -34,7 +34,7 @@ class CategorySelect extends Component {
 
 		return (
 			<div className="CategorySelect">
-				<label>Which category would you like to look in?</label>
+				<label>Which category?</label>
 				<select
 					value={this.props.searchCategory}
 					onChange={this.props.onUpdate}

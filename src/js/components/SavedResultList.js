@@ -22,7 +22,7 @@ class SavedResultList extends Component {
 	renderBlank() {
 		return (
 			<div className="blank">
-				{/* nothing? */}
+				Results you save will go here
 			</div>
 		);
 	}

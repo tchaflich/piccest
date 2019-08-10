@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 import SearchResult from './SearchResult';
+import Pixabay from './../Pixabay';
 
 class SearchResultList extends Component {
 
@@ -22,15 +23,20 @@ class SearchResultList extends Component {
 	}
 
 	shouldHaveResults() {
-		return this.props.query && !this.props.loading;
+		return (
+			// trimmed query exists
+			Pixabay.encodeQuery(this.props.query) &&
+			// not currently attempting to load results
+			!this.props.loading
+		);
 	}
 
 	renderBlank() {
 		let contents;
 		if (this.shouldHaveResults()) {
-			contents = 'No results, sorry.';
+			contents = 'No results, sorry';
 		} else {
-			contents = 'Use the search above to find pictures!'
+			contents = this.props.loading ? '' : 'Use the search above to find pictures'
 		}
 		return (
 			<div className="blank">

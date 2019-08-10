@@ -8,7 +8,7 @@ class SearchInput extends Component {
 	}
 
 	getPlaceholder() {
-		return 'Type to search...';
+		return 'Type to search';
 	}
 
 	render() {
