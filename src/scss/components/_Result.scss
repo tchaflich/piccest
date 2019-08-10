@@ -1,49 +1,118 @@
 
-.Result {
+// .Result {
 
-	text-align: center;
-	max-width: 400px;
+// 	text-align: center;
+// 	max-width: 400px;
 
-	.image-wrapper {
-		display: block;
-		float: left;
-		position: relative;
-		text-align: center;
-		overflow: hidden;
+// 	.image-wrapper {
+// 		display: block;
+// 		float: left;
+// 		position: relative;
+// 		text-align: center;
+// 		// overflow: hidden;
 
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
+// 		display: flex;
+// 		justify-content: space-around;
+// 		align-items: center;
 
-		& > img {
-			overflow: hidden;
+// 		& > img {
+// 			overflow: hidden;
 
-			box-shadow:
-				0 0 2px rgba(darken($gray, 20), 0.5),
-				-1px 1px 2px rgba($midnight, 0.2);
+// 			box-shadow:
+// 				0 0 2px rgba(darken($gray, 20), 0.5),
+// 				-1px 1px 2px rgba($midnight, 0.2);
+// 		}
+// 	}
+
+// 	.tag {
+// 		background-color: $amethyst;
+// 		color: white;
+// 		display: inline-block;
+// 		padding: 0.2em 0.5em;
+// 		border-radius: 4px;
+// 		margin: 0.2em;
+// 		font-size: 0.8em;
+// 	}
+
+// 	.engagements {
+// 		display: flex;
+// 		justify-content: space-around;
+// 	}
+
+// 	.engagement {
+// 		& > * {
+// 			display: inline-block;
+// 			vertical-align: middle;
+// 			font-size: 0.8rem;
+// 		}
+// 	}
+
+// }
+
+.SearchResult {
+
+	width: 100%;
+	height: 100%;
+	position: relative;
+
+	cursor: pointer;
+
+
+	& > .image-preview {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+
+		transition: all 200ms ease-in-out;
+
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: 50% 50%;
+
+		background-color: lighten($gray, 35);
+
+		&:hover {
+			// todo
 		}
 	}
 
-	.tag {
-		background-color: $amethyst;
+	& > .metadata {
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		padding: 1em;
+		padding-bottom: 3em;
+
+		// scrim for text
+		background-image: linear-gradient(
+			180deg,
+			rgba(darken($midnight, 20), 0.7),
+			transparent
+		);
+
+
 		color: white;
-		display: inline-block;
-		padding: 0.2em 0.5em;
-		border-radius: 4px;
-		margin: 0.2em;
-		font-size: 0.8em;
-	}
+		text-shadow:
+			0 0 2px rgba($midnight, 1),
+			0 0 3px rgba($midnight, 0.9),
+			-1px 1px 3px rgba($midnight, 0.7);
 
-	.engagements {
-		display: flex;
-		justify-content: space-around;
-	}
-
-	.engagement {
-		& > * {
-			display: inline-block;
-			vertical-align: middle;
-			font-size: 0.8rem;
+		& .tags {
+			font-family: $font-stack-serif;
+			& > span {
+				display: inline-block;
+				margin-right: 0.6em;
+			}
+		}
+		& .credits {
+			font-size: 0.8em;
+			margin: 0.4em 0;
+		}
+		& .engagement {
+			font-size: 0.8em;
 		}
 	}
 

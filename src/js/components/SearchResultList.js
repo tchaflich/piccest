@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 
-import Result from './Result';
+import SearchResult from './SearchResult';
 
 class SearchResultList extends Component {
 
@@ -11,7 +11,7 @@ class SearchResultList extends Component {
 
 	renderResult(result) {
 		return (
-			<div key={result.id}><Result data={result} /></div>
+			<SearchResult key={result.id} data={result} />
 		)
 	}
 

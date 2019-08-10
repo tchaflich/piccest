@@ -46,10 +46,6 @@ class App extends Component {
 	}
 
 	liveSearch(query, category) {
-		let randint = function(min, max) {
-			return Math.floor(Math.random() * (max - min + 1)) + min;
-		};
-
 		this.setState({
 			'loading': true,
 		});
@@ -58,15 +54,8 @@ class App extends Component {
 			query,
 			category
 		).then((data) => {
-			// todo: fix up when search works!
-			// this hits a random subsection of the fake results
-			const tmp1 = randint(0, data.hits.length - 1);
-			const tmp2 = randint(0, data.hits.length - 1);
 			this.setState({
-				'searchResults': (data.hits.slice(
-					tmp1 > tmp2 ? tmp2 : tmp1,
-					tmp1 > tmp2 ? tmp1 : tmp2,
-				)),
+				'searchResults': (data.hits.slice()),
 				'loading': false,
 			});
 		}).catch(() => {

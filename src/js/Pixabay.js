@@ -84,16 +84,6 @@ class Pixabay {
 			xhr.open('GET', Pixabay.buildQueryString(query, category));
 			xhr.send();
 		});
-
-		// return new Promise((resolve, reject) => {
-		// 	setTimeout(() => {
-		// 		if (!Pixabay.isLastRequest(query, category)) {
-		// 			reject();
-		// 		}
-
-		// 		resolve(fakeData);
-		// 	}, 100 + Math.round(Math.random() * 500));
-		// });
 	}
 
 

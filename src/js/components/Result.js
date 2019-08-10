@@ -7,72 +7,60 @@ class Result extends Component {
 		super(props);
 	}
 
-	renderImagePreview() {
-		const width = this.props.data.previewWidth;
-		const height = this.props.data.previewHeight;
-		const url = this.props.data.previewURL;
-
-		return (
-			<div className="image-wrapper">
-				<img width={width} height={height} alt={this.getAltText()} src={url} />
-			</div>
-		);
+	getImageURL() {
+		// 640 preview image
+		return this.props.data.webformatURL;
 	}
 
-	renderTag(tag) {
-		return (<span className="tag" key={tag}>{tag}</span>);
-	}
-
-	renderTags() {
+	getTags() {
 		let tags;
+
 		try {
 			tags = this.props.data.tags.split(/,\s*/g);
 		} catch (e) {
-			return <div></div>;
+			tags = [];
 		}
 
-		return (<div>{tags.map(this.renderTag)}</div>)
+		return tags;
+	}
+
+	getAuthor() {
+		return this.props.data.user;
+	}
+
+	getType() {
+		let type = (this.props.data.type) || '';
+
+		return (
+			type.charAt(0).toUpperCase() +
+			type.substr(1)
+		);
 	}
 
 	getAltText() {
 		return 'Photo description: ' + this.props.data.tags;
 	}
 
-	renderEngagement(key, icon) {
-		let count = this.props.data[key];
-		let src = './media/' + icon + '.png';
-		return (
-			<div key={key} className="engagement">
-				<img src={src} />
-				<span>{count}</span>
-			</div>
-		)
-	}
-
-	getEngagements() {
-		return [
-			{'key': 'likes', 'icon': 'thumbsup'},
-			{'key': 'favorites', 'icon': 'heart'},
-			{'key': 'downloads', 'icon': 'clouddown'},
+	getEngagement() {
+		const keys = [
+			'likes',
+			'favorites',
+			'comments',
+			// 'downloads',
+			// 'views',
 		];
-	}
 
-	renderEngagements() {
-		let content = this.getEngagements().map((i) => {
-			return this.renderEngagement(i.key, i.icon);
+		return keys.map((key) => {
+			return {
+				'type': key,
+				'count': this.props.data[key],
+			};
 		});
-
-		return (
-			<div className="engagements">{content}</div>
-		);
 	}
 
 	render() {
-		return (<div className="Result">
-			{this.renderImagePreview()}
-			{this.renderTags()}
-			{this.renderEngagements()}
-		</div>);
+		// overwrite in subclass
+		return (<div className="Result"></div>);
 	}
 
 }
