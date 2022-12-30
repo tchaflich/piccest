@@ -36,7 +36,7 @@
     "eslint-plugin-jsdoc": "^15.8.0",
     "eslint-plugin-react": "^7.14.3",
     "mini-css-extract-plugin": "^0.8.0",
-    "mocha": "^6.2.0",
+    "mocha": "^10.2.0",
     "mocha-loader": "^2.0.1",
     "mock-local-storage": "^1.1.8",
     "node-sass": "^4.12.0",
